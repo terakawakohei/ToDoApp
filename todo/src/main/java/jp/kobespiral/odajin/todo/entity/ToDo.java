@@ -1,22 +1,24 @@
 package jp.kobespiral.odajin.todo.entity;//適宜変えること
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 public class ToDo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long seq; // 通し番号
-    String title; // 題目
-    String mid; // 作成者
-    boolean done; // 完了フラグ
+    Long seq;
+    String title;
+    String mid;
+    boolean done;
     @Temporal(TemporalType.TIMESTAMP)
-    Date createdAt; // 作成日時
+    Date createdAt;
     @Temporal(TemporalType.TIMESTAMP)
-    Date doneAt; // 完了日時
+    Date doneAt;
+
 }
