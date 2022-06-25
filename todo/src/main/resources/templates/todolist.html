@@ -11,6 +11,18 @@
     <h1>リスト画面</h1>
     <p>あなたのToDoが表示されます</p>
     <h2>ToDo</h2>
+    <table border="1">
+        <tr>
+            <th>ToDo</th>
+            <th>done</th>
+            <th>コマンド</th>
+        </tr>
+        <tr th:each="m: ${mid_ToDos}">
+            <td>[[${m.title}]]</td>
+            <td>[[${m.done}]]</td>
+            <td><a th:href=@{/admin/delete/{m}(m=${m.mid})}>削除</a></td>
+        </tr>
+    </table>
     <h1>ToDoを登録する</h1>
     <p>内容を入力してください</p>
     <form

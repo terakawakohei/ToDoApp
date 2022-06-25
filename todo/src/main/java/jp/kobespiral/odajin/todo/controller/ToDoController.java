@@ -1,5 +1,7 @@
 package jp.kobespiral.odajin.todo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,9 +59,9 @@ public class ToDoController {
         //midをもとにその人のToDoデータを取得
         //取得したToDoデータを用いて，list.htmlを描画
 
-        return "redirect:todo/"+mid;
+        return "redirect:/todo/"+mid;
     }
-    @GetMapping("todo/{mid}")
+    @GetMapping("/todo/{mid}")
     public String showToDoListOfUser(
         Model model,
         @PathVariable
@@ -68,10 +70,14 @@ public class ToDoController {
         ToDoForm form
     ){
         //midのToDo情報を取得
-
-        model.addAttribute("ToDoForm", new ToDoForm());
-        model.addAttribute("mid",mid);
         //Modelに詰めて，todolistで描画
+        List<ToDo> mid_ToDos = tService.getToDoList(mid);
+        model.addAttribute("mid_ToDos", mid_ToDos);
+
+        //ToDo入力用の空のフォームを用意
+        model.addAttribute("ToDoForm", new ToDoForm());
+        //todolist.htmlで使用するため，modelにmidを追加
+        model.addAttribute("mid",mid);
         return "todolist";
     }
     @PostMapping("/todo/{mid}/register")
@@ -83,7 +89,7 @@ public class ToDoController {
         ) {
         ToDo t = tService.createToDo(mid, form);//midなどの情報も渡したい
         model.addAttribute("ToDoForm", t);
-        return "todolist";
+        return "redirect:/todo/"+mid;
     }
 
 }
