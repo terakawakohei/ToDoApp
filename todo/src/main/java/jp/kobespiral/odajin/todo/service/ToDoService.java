@@ -42,4 +42,10 @@ public class ToDoService {
     public List<ToDo> getDoneList(String mid) {
         return tRepo.findByMidAndDone(mid, true);
     }
+
+    public ToDo doneToDo(String mid,Long seq){
+        ToDo t = tRepo.findByMidAndSeq(mid,seq);
+        t.setDone(true);
+        return tRepo.save(t);
+    }
 }

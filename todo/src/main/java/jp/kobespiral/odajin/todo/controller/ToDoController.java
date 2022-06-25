@@ -80,15 +80,15 @@ public class ToDoController {
         model.addAttribute("mid",mid);
         return "todolist";
     }
-    @PostMapping("/todo/{mid}/register")
-    String createToDo(
+    @GetMapping("/todo/{mid}/{str_seq}")
+    String doneToDo(
         @PathVariable String mid,
-        @ModelAttribute(name = "ToDoForm") 
-        ToDoForm form, 
-        Model model
+        @PathVariable String str_seq
         ) {
-        ToDo t = tService.createToDo(mid, form);//midなどの情報も渡したい
-        model.addAttribute("ToDoForm", t);
+        Long seq = Long.parseLong(str_seq);
+        //更新対象のToDoを取得
+        tService.doneToDo(mid,seq);
+
         return "redirect:/todo/"+mid;
     }
 
