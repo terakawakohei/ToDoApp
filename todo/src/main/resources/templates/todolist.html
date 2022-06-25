@@ -17,10 +17,21 @@
             <th>done</th>
             <th>コマンド</th>
         </tr>
-        <tr th:each="m: ${mid_ToDos}">
+        <tr th:each="m: ${ToDos}">
             <td>[[${m.title}]]</td>
             <td>[[${m.done}]]</td>
             <td><a th:href=@{/todo/{m}/{s}(m=${m.mid},s=${m.seq})}>完了</a></td>
+        </tr>
+    </table>
+<h2>Done</h2>
+    <table border="1">
+        <tr>
+            <th>Done</th>
+            <th>done</th>
+        </tr>
+        <tr th:each="m: ${Dones}">
+            <td>[[${m.title}]]</td>
+            <td>[[${m.done}]]</td>
         </tr>
     </table>
     <h1>ToDoを登録する</h1>

@@ -36,8 +36,8 @@ public class ToDoController {
         return "index";
     }
 
+    //ログイン処理
     @PostMapping("/enter")
-    //"/enter"にPostアクセスが有ったとき，このアノテーションが付与された関数が呼び出される
     public String confirmUserExistence(
     Model model,
     //index.htmlからPostされたデータを，formで受け取る
@@ -71,8 +71,15 @@ public class ToDoController {
     ){
         //midのToDo情報を取得
         //Modelに詰めて，todolistで描画
-        List<ToDo> mid_ToDos = tService.getToDoList(mid);
-        model.addAttribute("mid_ToDos", mid_ToDos);
+        List<ToDo> ToDos = tService.getToDoList(mid);
+        model.addAttribute("ToDos", ToDos);
+
+        //midのDone情報を取得
+        //Modelに詰めて，todolistで描画
+        List<ToDo> Dones = tService.getDoneList(mid);
+        model.addAttribute("Dones", Dones);
+
+
 
         //ToDo入力用の空のフォームを用意
         model.addAttribute("ToDoForm", new ToDoForm());
@@ -80,6 +87,8 @@ public class ToDoController {
         model.addAttribute("mid",mid);
         return "todolist";
     }
+
+    //指定したユーザのToDoを完了済みに変更する
     @GetMapping("/todo/{mid}/{str_seq}")
     String doneToDo(
         @PathVariable String mid,
