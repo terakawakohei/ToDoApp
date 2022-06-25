@@ -12,4 +12,6 @@ public interface ToDoRepository extends CrudRepository<ToDo, Long> {
     List<ToDo> findByMidAndDone(String mid, Boolean done);
 
     List<ToDo> findByDone(Boolean done);
+
+    List<ToDo> findByMid(String mid);
 }
