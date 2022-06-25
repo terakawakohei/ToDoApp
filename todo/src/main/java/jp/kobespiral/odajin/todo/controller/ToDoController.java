@@ -61,6 +61,8 @@ public class ToDoController {
 
         return "redirect:/todo/"+mid;
     }
+    
+    //ユーザのマイページ
     @GetMapping("/todo/{mid}")
     public String showToDoListOfUser(
         Model model,
@@ -88,6 +90,18 @@ public class ToDoController {
         return "todolist";
     }
 
+    @PostMapping("/todo/{mid}/register")
+    String createToDo(
+        @PathVariable String mid,
+        @ModelAttribute(name = "ToDoForm")
+        ToDoForm form,
+        Model model
+        ) {
+        ToDo t = tService.createToDo(mid, form);//midなどの情報も渡したい
+        model.addAttribute("ToDoForm", t);
+        return "redirect:/todo/"+mid;
+    }
+
     //指定したユーザのToDoを完了済みに変更する
     @GetMapping("/todo/{mid}/{str_seq}")
     String doneToDo(
@@ -99,6 +113,24 @@ public class ToDoController {
         tService.doneToDo(mid,seq);
 
         return "redirect:/todo/"+mid;
+    }
+
+    @GetMapping("/allmembers")
+    public String showAllMembersList(
+        Model model
+    ) {
+        //全員のToDo情報を取得
+        //Modelに詰めて，allMembersList.htmlで描画
+        List<ToDo> ToDos = tService.getToDoList();
+        model.addAttribute("allToDos", ToDos);
+
+        //全員のDone情報を取得
+        //Modelに詰めて，allMembersListで描画
+        List<ToDo> Dones = tService.getDoneList();
+        model.addAttribute("allDones", Dones);
+        
+        return "allMembersList";
+
     }
 
 }

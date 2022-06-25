@@ -8,7 +8,8 @@
   </head>
 
   <body>
-    <h1>リスト画面</h1>
+<a th:href="@{/allmembers}">全員のToDoリスト</a>
+    <h1 th:text="|${mid}さんのToDoリスト|"></h1>
     <p>あなたのToDoが表示されます</p>
     <h2>ToDo</h2>
     <table border="1">
