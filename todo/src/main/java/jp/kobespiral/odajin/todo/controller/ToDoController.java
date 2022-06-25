@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.kobespiral.odajin.todo.dto.LoginForm;
+import jp.kobespiral.odajin.todo.dto.ToDoForm;
+import jp.kobespiral.odajin.todo.entity.ToDo;
 import jp.kobespiral.odajin.todo.service.MemberService;
 import jp.kobespiral.odajin.todo.service.ToDoService;
 
@@ -17,6 +19,10 @@ import jp.kobespiral.odajin.todo.service.ToDoService;
 public class ToDoController {
     @Autowired
     MemberService mService;
+
+    @Autowired
+    ToDoService tService;
+
 
     @GetMapping("/")
     //"/"にGetアクセスが有ったとき，このアノテーションが付与された関数が呼び出される
@@ -55,12 +61,28 @@ public class ToDoController {
     }
     @GetMapping("todo/{mid}")
     public String showToDoListOfUser(
+        Model model,
         @PathVariable
-        String mid
+        String mid,
+        @ModelAttribute
+        ToDoForm form
     ){
         //midのToDo情報を取得
 
+        model.addAttribute("ToDoForm", new ToDoForm());
+        model.addAttribute("mid",mid);
         //Modelに詰めて，todolistで描画
+        return "todolist";
+    }
+    @PostMapping("/todo/{mid}/register")
+    String createToDo(
+        @PathVariable String mid,
+        @ModelAttribute(name = "ToDoForm") 
+        ToDoForm form, 
+        Model model
+        ) {
+        ToDo t = tService.createToDo(mid, form);//midなどの情報も渡したい
+        model.addAttribute("ToDoForm", t);
         return "todolist";
     }
 

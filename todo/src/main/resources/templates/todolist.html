@@ -11,5 +11,21 @@
     <h1>リスト画面</h1>
     <p>あなたのToDoが表示されます</p>
     <h2>ToDo</h2>
+    <h1>ToDoを登録する</h1>
+    <p>内容を入力してください</p>
+    <form
+      role="form"
+      th:action="@{/todo/__${mid}__/register}"
+      th:object="${ToDoForm}"
+      method="post"
+    >
+      <table>
+        <tr>
+          <td><label>内容: </label></td>
+          <td><input type="text" required th:field="*{title}" /></td>
+        </tr>
+      </table>
+      <p><input type="submit" value="登録する" /></p>
+    </form>
   </body>
 </html>
