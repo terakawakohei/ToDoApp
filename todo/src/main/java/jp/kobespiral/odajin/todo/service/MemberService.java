@@ -59,4 +59,13 @@ public class MemberService {
         Member m = getMember(mid);
         mRepo.delete(m);
     }
+    /**
+     * メンバーが存在するかチェック
+     */
+    public boolean checkExistenceMenber(String mid) {
+        return mRepo.existsById(mid);
+    }
+
+
+
 }
