@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全員のToDoリスト</title>
+  </head>
+
+  <body>
+    <a th:href="@{/}">ログイン画面</a>
+    <p>全員のToDoが表示されます</p>
+    <h2>ToDo</h2>
+    <table border="1">
+      <tr>
+        <th>作成者</th>
+        <th>title</th>
+      </tr>
+      <tr th:each="a: ${allToDos}">
+        <td>[[${a.mid}]]</td>
+        <td>[[${a.title}]]</td>
+      </tr>
+    </table>
+    <h2>Done</h2>
+    <table border="1">
+      <tr>
+        <th>作成者</th>
+        <th>title</th>
+      </tr>
+      <tr th:each="a: ${allDones}">
+        <td>[[${a.mid}]]</td>
+        <td>[[${a.title}]]</td>
+      </tr>
+    </table>
+  </body>
+</html>
