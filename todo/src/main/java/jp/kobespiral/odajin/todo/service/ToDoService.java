@@ -49,6 +49,7 @@ public class ToDoService {
     public ToDo doneToDo(String mid,Long seq){
         ToDo t = tRepo.findByMidAndSeq(mid,seq);
         t.setDone(true);
+        t.setDoneAt(new Date());
         return tRepo.save(t);
     }
 

@@ -14,25 +14,27 @@
     <h2>ToDo</h2>
     <table border="1">
         <tr>
-            <th>ToDo</th>
-            <th>done</th>
+            <th>内容</th>
+            <th>作成日時</th>
             <th>コマンド</th>
         </tr>
         <tr th:each="m: ${ToDos}">
             <td>[[${m.title}]]</td>
-            <td>[[${m.done}]]</td>
+            <td>[[${m.createdAt}]]</td>
             <td><a th:href=@{/todo/{m}/{s}(m=${m.mid},s=${m.seq})}>完了</a></td>
         </tr>
     </table>
 <h2>Done</h2>
     <table border="1">
         <tr>
-            <th>Done</th>
-            <th>done</th>
+            <th>内容</th>
+            <th>作成日時</th>
+            <th>完了日時</th>
         </tr>
         <tr th:each="m: ${Dones}">
             <td>[[${m.title}]]</td>
-            <td>[[${m.done}]]</td>
+            <td>[[${m.createdAt}]]</td>
+            <td>[[${m.doneAt}]]</td>
         </tr>
     </table>
     <h1>ToDoを登録する</h1>
