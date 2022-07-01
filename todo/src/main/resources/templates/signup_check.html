@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登録確認</title>
 </head>
 
@@ -13,7 +11,8 @@
     <p>
         以下の情報でメンバーを登録します．よろしければ登録を押してください．
     </p>
-    <form role="form" th:action="@{/admin/register}" th:object="${MemberForm}" method="post">
+
+    <form role="form" th:action="@{/sign_up}" th:object="${MemberForm}" method="post">
         <p>
             <label>メンバーID: </label>
             [[*{mid}]]
@@ -32,6 +31,7 @@
         </p>
         <input type="hidden" th:field="*{mid}" />
         <input type="hidden" th:field="*{name}" />
+        <input type="hidden" th:field="*{password}" />
     </form>
 </body>
 

@@ -16,8 +16,13 @@ public class MemberForm {
     @Size(min = 1, max = 32)
     String name; // 名前
 
+    @NotBlank
+    @Size(min = 8)
+    String password;
+    String role = "MEMBER";
+
     public Member toEntity() {
-        Member m = new Member(mid, name);
+        Member m = new Member(mid, name, password, role);
         return m;
     }
 }
