@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,11 +29,19 @@ public class MemberController {
      * @param model
      * @return
      */
-    @GetMapping("/register")
     String showUserForm(Model model) {
         List<Member> members = mService.getAllMembers();
         model.addAttribute("members", members);
         MemberForm form = new MemberForm();
+        model.addAttribute("MemberForm", form);
+
+        return "register";
+    }
+
+    @GetMapping("/register")
+    String showUserForm(@ModelAttribute MemberForm form, Model model) {
+        List<Member> members = mService.getAllMembers();
+        model.addAttribute("members", members);
         model.addAttribute("MemberForm", form);
 
         return "register";
@@ -45,8 +55,16 @@ public class MemberController {
      * @return
      */
     @PostMapping("/check")
-    String checkUserForm(@ModelAttribute(name = "MemberForm") MemberForm form, Model model) {
+    String checkUserForm(@Validated @ModelAttribute(name = "MemberForm") MemberForm form,
+            BindingResult bindingResult, Model model) {
+        // 入力チェックに引っかかった場合、ユーザー登録画面に戻る
+        if (bindingResult.hasErrors()) {
+            // GETリクエスト用のメソッドを呼び出して、ユーザー登録画面に戻る
+            return showUserForm(form, model);
+        }
+
         model.addAttribute("MemberForm", form);
+
         return "check";
     }
 
