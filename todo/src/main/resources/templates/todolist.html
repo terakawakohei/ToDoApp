@@ -1,57 +1,57 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ToDoリスト</title>
-  </head>
 
-  <body>
-<a th:href="@{/allmembers}">全員のToDoリストを見る</a>
-    <h1 th:text="|${mid}さんのToDoリスト|"></h1>
-    <p>あなたのToDoが表示されます</p>
-    <h2>ToDo</h2>
-    <table border="1">
-        <tr>
-            <th>内容</th>
-            <th>作成日時</th>
-            <th>コマンド</th>
-        </tr>
-        <tr th:each="m: ${ToDos}">
-            <td>[[${m.title}]]</td>
-            <td>[[${m.createdAt}]]</td>
-            <td><a th:href=@{/todo/{m}/{s}(m=${m.mid},s=${m.seq})}>完了</a></td>
-        </tr>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToDoリスト</title>
+</head>
+
+<body>
+  <form th:action="@{/sign_out}" method="post">
+    <input type="submit" value="サインアウト" />
+  </form>
+  <a th:href="@{/allmembers}">全員のToDoリストを見る</a>
+  <h1 th:text="|${mid}さんのToDoリスト|"></h1>
+  <p>あなたのToDoが表示されます</p>
+  <h2>ToDo</h2>
+  <table border="1" class="table">
+    <tr>
+      <th>内容</th>
+      <th>作成日時</th>
+      <th>コマンド</th>
+    </tr>
+    <tr th:each="m: ${ToDos}">
+      <td>[[${m.title}]]</td>
+      <td>[[${m.createdAt}]]</td>
+      <td><a th:href=@{/todo/{m}/{s}(m=${m.mid},s=${m.seq})}>完了</a></td>
+    </tr>
+  </table>
+  <h2>Done</h2>
+  <table border="1" class="table">
+    <tr>
+      <th>内容</th>
+      <th>作成日時</th>
+      <th>完了日時</th>
+    </tr>
+    <tr th:each="m: ${Dones}">
+      <td>[[${m.title}]]</td>
+      <td>[[${m.createdAt}]]</td>
+      <td>[[${m.doneAt}]]</td>
+    </tr>
+  </table>
+  <h1>ToDoを登録する</h1>
+  <p>内容を入力してください</p>
+  <form role="form" th:action="@{/todo/__${mid}__/register}" th:object="${ToDoForm}" method="post">
+    <table>
+      <tr>
+        <td><label>内容: </label></td>
+        <td><input type="text" required th:field="*{title}" /></td>
+      </tr>
     </table>
-<h2>Done</h2>
-    <table border="1">
-        <tr>
-            <th>内容</th>
-            <th>作成日時</th>
-            <th>完了日時</th>
-        </tr>
-        <tr th:each="m: ${Dones}">
-            <td>[[${m.title}]]</td>
-            <td>[[${m.createdAt}]]</td>
-            <td>[[${m.doneAt}]]</td>
-        </tr>
-    </table>
-    <h1>ToDoを登録する</h1>
-    <p>内容を入力してください</p>
-    <form
-      role="form"
-      th:action="@{/todo/__${mid}__/register}"
-      th:object="${ToDoForm}"
-      method="post"
-    >
-      <table>
-        <tr>
-          <td><label>内容: </label></td>
-          <td><input type="text" required th:field="*{title}" /></td>
-        </tr>
-      </table>
-      <p><input type="submit" value="登録する" /></p>
-    </form>
-  </body>
+    <p><input type="submit" value="登録する" /></p>
+  </form>
+</body>
+
 </html>
