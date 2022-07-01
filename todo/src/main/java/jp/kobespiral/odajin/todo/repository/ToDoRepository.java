@@ -15,5 +15,5 @@ public interface ToDoRepository extends CrudRepository<ToDo, Long> {
 
     List<ToDo> findByMid(String mid);
 
-    ToDo findByMidAndSeq(String mid,Long seq);
+    ToDo findByMidAndSeq(String mid, Long seq);
 }
