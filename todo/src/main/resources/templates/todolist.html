@@ -48,6 +48,7 @@
       <tr>
         <td><label>内容: </label></td>
         <td><input type="text" required th:field="*{title}" /></td>
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></span>
       </tr>
     </table>
     <p><input type="submit" value="登録する" /></p>
