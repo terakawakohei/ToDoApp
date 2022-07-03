@@ -62,40 +62,6 @@ public class ToDoController {
         return "redirect:/todo/" + m.getMid();
     }
 
-    @GetMapping("/")
-    // "/"にGetアクセスが有ったとき，このアノテーションが付与された関数が呼び出される
-    public String showLandingPage(
-            Model model,
-            @ModelAttribute LoginForm form) {
-        model.addAttribute("LoginForm", new LoginForm());
-        return "index";
-    }
-
-    // ログイン処理
-    @PostMapping("/enter")
-    public String confirmUserExistence(
-            Model model,
-            // index.htmlからPostされたデータを，formで受け取る
-            RedirectAttributes attributes,
-            @ModelAttribute LoginForm form
-    // @PathVariable("mid")
-    // String mid
-    ) {
-        String mid = form.getMid();
-        // ユーザが存在するかチェック
-        if (!mService.checkExistenceMenber(mid)) {
-            attributes.addFlashAttribute("isMidNotFound", true);
-            return "redirect:/";
-        }
-        // 存在しないなら，リダイレクト
-
-        // 存在するなら
-        // midをもとにその人のToDoデータを取得
-        // 取得したToDoデータを用いて，list.htmlを描画
-
-        return "redirect:/todo/" + mid;
-    }
-
     // ユーザのマイページ
     @GetMapping("/todo/{mid}")
     public String showToDoListOfUser(
