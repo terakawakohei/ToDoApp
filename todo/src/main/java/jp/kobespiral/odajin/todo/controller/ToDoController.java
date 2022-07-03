@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,9 +99,9 @@ public class ToDoController {
     // ユーザのマイページ
     @GetMapping("/todo/{mid}")
     public String showToDoListOfUser(
-            Model model,
             @PathVariable String mid,
-            @ModelAttribute ToDoForm form) {
+            @ModelAttribute ToDoForm form,
+            Model model) {
 
         checkIdentity(mid);
 
@@ -114,7 +116,7 @@ public class ToDoController {
         model.addAttribute("Dones", Dones);
 
         // ToDo入力用の空のフォームを用意
-        model.addAttribute("ToDoForm", new ToDoForm());
+        model.addAttribute("ToDoForm", form);
         // todolist.htmlで使用するため，modelにmidを追加
         model.addAttribute("mid", mid);
         return "todolist";
@@ -123,9 +125,15 @@ public class ToDoController {
     @PostMapping("/todo/{mid}/register")
     String createToDo(
             @PathVariable String mid,
-            @ModelAttribute(name = "ToDoForm") ToDoForm form,
+            @Validated @ModelAttribute(name = "ToDoForm") ToDoForm form,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
             Model model) {
         checkIdentity(mid);
+        if (bindingResult.hasErrors()) {
+            // GETリクエスト用のメソッドを呼び出して、ユーザー登録画面に戻る
+            return showToDoListOfUser(mid, form, model);
+        }
         ToDo t = tService.createToDo(mid, form);// midなどの情報も渡したい
         model.addAttribute("ToDoForm", t);
         return "redirect:/todo/" + mid;
